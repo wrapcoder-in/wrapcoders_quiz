@@ -1,0 +1,233 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #6dd5fa, #2980b9);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Floating icons */
+.floating-icons {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0; /* keep behind content */
+}
+
+.floating-icons span {
+  position: absolute;
+  font-size: 1.5rem;
+  animation: float linear infinite;
+  opacity: 0.6;
+}
+
+.floating-icons span:nth-child(1) { left: 10%; font-size: 2rem; animation-duration: 8s; }
+.floating-icons span:nth-child(2) { left: 30%; font-size: 2.5rem; animation-duration: 12s; animation-direction: reverse; }
+.floating-icons span:nth-child(3) { left: 50%; font-size: 1.8rem; animation-duration: 10s; }
+.floating-icons span:nth-child(4) { left: 70%; font-size: 3rem; animation-duration: 14s; animation-direction: reverse; }
+.floating-icons span:nth-child(5) { left: 90%; font-size: 2.2rem; animation-duration: 9s; }
+
+@keyframes float {
+  from { transform: translateY(100vh) rotate(0deg); }
+  to   { transform: translateY(-120vh) rotate(360deg); }
+}
+ 
+
+/* Screens */
+.screen {
+  display: none;
+  position: fixed;
+  inset: 0;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+.screen.active {
+  display: flex;
+}
+
+/* Card */
+.card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  width: 90%;
+  max-width: 400px;
+  color: #fff;
+}
+
+.card h1, .card h2 {
+  margin-bottom: 20px;
+}
+
+/* Inputs */
+input {
+  width: 100%;
+  margin: 10px 0;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  outline: none;
+}
+
+/* Buttons */
+button {
+  background: #ff6b6b;
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  margin-top: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+button:hover {
+  transform: scale(1.05);
+}
+
+/* Subjects */
+.subjects {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 15px;
+}
+.subject {
+  padding: 20px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1rem;
+}
+.subject.math { background: #e74c3c; }
+.subject.physics { background: #3498db; }
+.subject.chemistry { background: #27ae60; }
+.subject.cs { background: #9b59b6; }
+
+/* Quiz */
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.progress {
+  background: #ddd;
+  border-radius: 10px;
+  width: 60%;
+  height: 10px;
+  margin-right: 10px;
+}
+#progress-bar {
+  background: #2ecc71;
+  height: 100%;
+  width: 0%;
+  border-radius: 10px;
+  transition: width 0.3s;
+}
+.options {
+  margin: 20px 0;
+  display: grid;
+  gap: 10px;
+}
+.options button {
+  background: #fff;
+  color: #333;
+}
+.options button.correct { background: #2ecc71; color: #fff; }
+.options button.wrong { background: #e74c3c; color: #fff; }
+
+/* Screen transition animation */
+@keyframes popIn {
+  0%   { transform: scale(0.7); opacity: 0; }
+  60%  { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+.screen.active .card {
+  animation: popIn 0.6s ease forwards;
+}
+
+.result-card {
+  animation: pulse 2s infinite alternate;
+}
+
+@keyframes pulse {
+  from { transform: scale(1); }
+  to   { transform: scale(1.05); }
+}
+
+/* Confetti Canvas */
+.result-card {
+  animation: pulse 2s infinite alternate;
+}
+
+@keyframes pulse {
+  from { transform: scale(1); }
+  to   { transform: scale(1.05); }
+}
+
+/* Score Circle */
+.score-circle {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 20px auto;
+}
+
+.score-circle svg {
+  width: 120px;
+  height: 120px;
+  transform: rotate(-90deg);
+}
+
+.score-circle circle {
+  fill: none;
+  stroke-width: 12;
+  stroke-linecap: round;
+}
+
+.score-circle circle:first-child {
+  stroke: #eee;
+}
+
+#progress-ring {
+  stroke: #00c9ff;
+  stroke-dasharray: 314; /* 2πr where r=50 */
+  stroke-dashoffset: 314;
+  transition: stroke-dashoffset 1s ease;
+}
+
+#score-percent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+//* Balloons / Party Background */
+#celebration-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0; /* behind result card */
+}
+.result-card {
+  position: relative;
+  z-index: 2; /* above balloons */
+  animation: pulse 2s infinite alternate;
+}
+

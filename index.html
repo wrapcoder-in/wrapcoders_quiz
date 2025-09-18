@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wrap Coders</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Floating Background -->
+<!-- Floating Background -->
+<div class="floating-icons" id="floating-icons"></div>
+
+
+  <!-- Login Screen -->
+  <section id="login-screen" class="screen active">
+    <div class="card">
+      <h1>Welcome to WeapCoders Quiz🎉</h1>
+      <input type="text" id="name" placeholder="Enter your name">
+      <input type="text" id="institute" placeholder="Enter your institute">
+      <button onclick="startQuiz()">Start</button>
+    </div>
+  </section>
+
+  <!-- Subject Selection -->
+  <section id="subject-screen" class="screen">
+    <div class="card">
+      <h2>Select a Subject</h2>
+      <div class="subjects">
+        <button class="subject math" onclick="chooseSubject('math')">Mathematics</button>
+        <button class="subject physics" onclick="chooseSubject('physics')">Physics</button>
+        <button class="subject chemistry" onclick="chooseSubject('chemistry')">Chemistry</button>
+        <button class="subject cs" onclick="chooseSubject('cs')">Computer Science</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quiz Screen -->
+  <section id="quiz-screen" class="screen">
+    <div class="card">
+      <div class="quiz-header">
+        <div class="progress">
+          <div id="progress-bar"></div>
+        </div>
+        <div id="timer">Time Left: 15s ⏳</div>
+      </div>
+      <h2 id="question">Question text</h2>
+      <div id="options" class="options"></div>
+      <button id="next-btn" onclick="nextQuestion()">Next</button>
+    </div>
+  </section>
+
+  <!-- Result Screen -->
+<section id="result-screen" class="screen">
+    
+  <div class="card result-card">
+    <h2 id="congrats-text">🎉 Congratulations! 🎉</h2>
+
+    <!-- Score Circle -->
+    <div class="score-circle">
+      <svg>
+        <circle cx="60" cy="60" r="50"></circle>
+        <circle id="progress-ring" cx="60" cy="60" r="50"></circle>
+      </svg>
+      <div id="score-percent">0%</div>
+    </div>
+
+    <p id="score-text"></p>
+    <button onclick="retryQuiz()">Retry</button>
+    <button onclick="goHome()">Back to Subjects</button>
+  </div>
+
+
+</section>
+
+<!-- 🎈 Balloon + Party Canvas -->
+<canvas id="celebration-canvas"></canvas>
+
+<!-- Leaderboard Screen -->
+<div id="leaderboard-screen" class="screen">
+  <div class="leaderboard-container">
+    <h1>🏆 Leaderboard 🏆</h1>
+    <ul id="leaderboard-list"></ul>
+    <button class="btn-home" onclick="goHome()">Back to Home</button>
+  </div>
+</div>
+
+
+  <script src="script.js"></script>
+</body>
+</html>
