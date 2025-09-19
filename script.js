@@ -10,7 +10,7 @@ function createIcon(){
   span.textContent = icons[Math.floor(Math.random()*icons.length)];
   span.style.left = Math.random() * 100 + "vw";
   span.style.fontSize = (1 + Math.random() * 2) + "rem";
-  const duration = 8 + Math.random() * 10; // 8–18s
+  const duration = 4 + Math.random() * 10; // 8–18s
   span.style.animationDuration = duration + "s";
   floatingContainer.appendChild(span);
 
@@ -39,7 +39,10 @@ const screens = {
   subject: document.getElementById("subject-screen"),
   quiz: document.getElementById("quiz-screen"),
   result: document.getElementById("result-screen"),
+  about: document.getElementById("about-screen"),
+  leaderboard: document.getElementById("leaderboard-screen")
 };
+
 
 let currentSubject = "";
 let currentQuestion = 0;
@@ -102,13 +105,17 @@ function show(screen){
   Object.values(screens).forEach(s => s.style.display = "none");
   screen.style.display = "flex";
 
-  // show/hide floating icons
+  // floating icons only for quiz flow
   if (screen.id === "login-screen" || screen.id === "subject-screen" || screen.id === "quiz-screen") {
     startFloatingIcons();
   } else {
     stopFloatingIcons();
   }
+
+  // if leaderboard screen, refresh it
+  if (screen.id === "leaderboard-screen") updateLeaderboard();
 }
+
 
 function startQuiz(){
   if(document.getElementById("name").value.trim() === "") return alert("Enter your name!");
@@ -211,12 +218,44 @@ function endQuiz(){
     }
   }, 20);
 }
+// ✅ Save to leaderboard
+  const playerName = document.getElementById("name").value.trim();
+  let leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
+  leaderboard.push({ name: playerName, score: score });
+  leaderboard.sort((a,b)=> b.score - a.score);
+  leaderboard = leaderboard.slice(0,5); // keep top 5
+  localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
 
+  updateLeaderboard();
+
+  function updateLeaderboard(){
+  const tbody = document.querySelector("#leaderboard tbody");
+  tbody.innerHTML = "";
+  let leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
+  leaderboard.forEach((entry, i)=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td style="padding:10px;">${i+1}</td>
+      <td style="padding:10px;">${entry.name}</td>
+      <td style="padding:10px;">${entry.score}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
 
 
 function retryQuiz(){
+  stopCelebration(); // ✅ stop balloons when retrying
   show(screens.subject);
+
+  currentQuestion = 0;
+  score = 0;
+  clearInterval(timer);
+  document.getElementById("progress-bar").style.width = "0%";
+  document.getElementById("options").innerHTML = "";
+  document.getElementById("question").textContent = "";
 }
+
 
 function goHome(){
   stopCelebration(); // stop balloons & pops
